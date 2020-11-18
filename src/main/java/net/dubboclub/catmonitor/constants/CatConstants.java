@@ -11,6 +11,8 @@ public class CatConstants {
 
     public static final String PROVIDER_APPLICATION_NAME = "serverApplicationName";
 
+    public static final String APPLICATION_NAME = "application";
+
     public static final String CONSUMER_CALL_SERVER = "DubboCall.server";
 
     public static final String CONSUMER_CALL_APP = "DubboCall.app";

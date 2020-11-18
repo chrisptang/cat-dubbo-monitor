@@ -124,22 +124,21 @@ public class CatTransaction implements Filter {
         }
     }
 
-    private String getProviderAppName(URL url) {
-        String appName = url.getParameter(CatConstants.PROVIDER_APPLICATION_NAME);
+    private static String getProviderAppName(URL url) {
+        String appName = url.getParameter(CatConstants.APPLICATION_NAME);
         if (appName == null || appName.length() == 0) {
-            String interfaceName = url.getParameter(CommonConstants.INTERFACE_KEY);
-            appName = interfaceName.substring(0, interfaceName.lastIndexOf('.'));
+            appName = url.getParameter(CommonConstants.INTERFACE_KEY);
         }
         return appName;
     }
 
-    private void setAttachment(Cat.Context context) {
+    private static void setAttachment(Cat.Context context) {
         RpcContext.getContext().setAttachment(Cat.Context.ROOT, context.getProperty(Cat.Context.ROOT));
         RpcContext.getContext().setAttachment(Cat.Context.CHILD, context.getProperty(Cat.Context.CHILD));
         RpcContext.getContext().setAttachment(Cat.Context.PARENT, context.getProperty(Cat.Context.PARENT));
     }
 
-    private Cat.Context getContext() {
+    private static Cat.Context getContext() {
         Cat.Context context = CAT_CONTEXT.get();
         if (context == null) {
             context = initContext();
@@ -148,7 +147,7 @@ public class CatTransaction implements Filter {
         return context;
     }
 
-    private Cat.Context initContext() {
+    private static Cat.Context initContext() {
         Cat.Context context = new DubboCatContext();
         Map<String, String> attachments = RpcContext.getContext().getAttachments();
         if (attachments != null && attachments.size() > 0) {
@@ -161,7 +160,7 @@ public class CatTransaction implements Filter {
         return context;
     }
 
-    private void createConsumerCross(URL url, Transaction transaction) {
+    private static void createConsumerCross(URL url, Transaction transaction) {
         Event crossAppEvent = Cat.newEvent(CatConstants.CONSUMER_CALL_APP, getProviderAppName(url));
         Event crossServerEvent = Cat.newEvent(CatConstants.CONSUMER_CALL_SERVER, url.getHost());
         Event crossPortEvent = Cat.newEvent(CatConstants.CONSUMER_CALL_PORT, url.getPort() + "");
@@ -176,12 +175,12 @@ public class CatTransaction implements Filter {
         transaction.addChild(crossServerEvent);
     }
 
-    private void completeEvent(Event event) {
+    private static void completeEvent(Event event) {
         AbstractMessage message = (AbstractMessage) event;
         message.setCompleted(true);
     }
 
-    private void createProviderCross(URL url, Transaction transaction) {
+    private static void createProviderCross(URL url, Transaction transaction) {
         String consumerAppName = RpcContext.getContext().getAttachment(CommonConstants.APPLICATION_KEY);
         if (consumerAppName == null || consumerAppName.length() == 0) {
             consumerAppName = RpcContext.getContext().getRemoteHost() + ":" + RpcContext.getContext().getRemotePort();
