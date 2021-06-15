@@ -1,15 +1,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>boot-infra</artifactId>
-        <groupId>com.miniso.boot</groupId>
-        <version>1.2.0-SNAPSHOT</version>
-    </parent>
 
     <modelVersion>4.0.0</modelVersion>
     <groupId>net.dubboclub</groupId>
     <artifactId>cat-dubbo-monitor</artifactId>
-    <version>0.0.6.miniso-SNAPSHOT</version>
+    <version>0.0.7.miniso-SNAPSHOT</version>
     <packaging>jar</packaging>
     <url>http://maven.apache.org</url>
     <properties>
@@ -26,10 +21,31 @@
         <dependency>
             <groupId>com.dianping.cat</groupId>
             <artifactId>cat-client</artifactId>
-            <version>3.0.1-miniso-SNAPSHOT</version>
+            <version>3.0.2-miniso-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>https://repo.minisobos.com/repository/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>https://repo.minisobos.com/repository/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>public-proxy</id>
+            <url>https://repo.minisobos.com/repository/public/</url>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
